@@ -1,6 +1,6 @@
 {
-    "name": "maintenance_page",
-    "short_name": "maintenance_page",
+    "name": "portfolioweb",
+    "short_name": "portfolioweb",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
