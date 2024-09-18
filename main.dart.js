@@ -61684,8 +61684,8 @@ $.r9()
 return new A.w2(A.e0(k,new A.hA(B.as,A.RS(A.nl(A.fo(A.a([o,n,i,A.eY(A.a([m,A.dw(A.e0(k,A.eY(A.a([q,A.dw(A.ado(new A.ab5(),4),1)],p),B.K,B.Q,B.D),B.aP,k,B.ak,B.as,r),9)],p),B.K,B.Q,B.D)],p),B.K,B.h6,B.D),k,s),k,k),k),B.xm,k,k,k,k),k)}}
 A.ab1.prototype={
 $0(){var s=document.createElement("a")
-s.href="assets/resume.pdf"
-s.download="Nakul Dev M V Resume"
+s.href="assets/Resume/Resume.pdf"
+s.download="Nakul"
 s.click()},
 $S:0}
 A.ab2.prototype={
