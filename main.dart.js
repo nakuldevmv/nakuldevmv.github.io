@@ -63070,7 +63070,7 @@ q=A.ba(A.a([new A.cc(B.ay,A.ch(l,l,l,B.O,l,l,!0,l,A.ab(A.a([A.ab(l,l,A.aG().$1$t
 $.dJ()
 return A.a37(A.aK(l,new A.cc(B.x,A.hs(A.dT(A.ba(A.a([o,n,j,A.bg(A.a([m,A.aU(A.aK(l,A.bg(A.a([q,A.aU(A.kX(new A.acb(),4),1)],p),B.q,B.t,B.i),B.S,l,B.v,B.x,r),9)],p),B.q,B.t,B.i)],p),B.q,B.bl,B.i),l,s),l,l),l),B.dJ,l,l,l,l))}}
 A.ac6.prototype={
-$0(){A.AU("https://github.com/desktopmv/Resume/blob/main/resume.pdf")},
+$0(){A.AU("https://github.com/nakuldevmv/Resume/blob/main/resume.pdf")},
 $S:0}
 A.ac7.prototype={
 $0(){var s=A.ajA(new A.ac5(),null,t.z)
