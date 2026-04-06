@@ -3,7 +3,10 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 
-const RESOURCES = {"assets/AssetManifest.bin": "164a707f7e939fe572b111fe7a9da7b9",
+const RESOURCES = {"gym/index.html": "a14240105179527e0f4e07becbacedf8",
+"gym": "a14240105179527e0f4e07becbacedf8",
+"gym/": "a14240105179527e0f4e07becbacedf8",
+"assets/AssetManifest.bin": "164a707f7e939fe572b111fe7a9da7b9",
 "assets/AssetManifest.bin.json": "0425641a90a2b710894c4797cf68e586",
 "assets/AssetManifest.json": "f72010292d0ee781e947da3ad0e0b89d",
 "assets/assets/book.png": "fefb25312bac8f08e116baebc1248766",
