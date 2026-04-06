@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Workout &amp; Diet Plan</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #0f0f0f;
+      color: #e8e8e8;
+      min-height: 100vh;
+      padding: 24px 16px 48px;
+    }
+
+    h1.page-title {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      margin-bottom: 40px;
+      color: #ff6b35;
+      text-transform: uppercase;
+    }
+
+    /* ── Section headings ─────────────────────────── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 14px 20px;
+      border-radius: 10px;
+      margin-bottom: 24px;
+    }
+
+    .section-header.workout {
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      border-left: 5px solid #4fc3f7;
+      color: #4fc3f7;
+    }
+
+    .section-header.diet {
+      background: linear-gradient(135deg, #1a2e1a, #163016);
+      border-left: 5px solid #81c784;
+      color: #81c784;
+    }
+
+    /* ── Cards ────────────────────────────────────── */
+    .card {
+      background: #1a1a1a;
+      border-radius: 14px;
+      border: 1px solid #2a2a2a;
+      padding: 24px;
+      margin-bottom: 28px;
+    }
+
+    .card h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #ff6b35;
+    }
+
+    /* ── Targets ──────────────────────────────────── */
+    .targets-grid {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .target-chip {
+      flex: 1;
+      min-width: 180px;
+      background: #222;
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 16px 20px;
+      text-align: center;
+    }
+
+    .target-chip .label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #888;
+      margin-bottom: 8px;
+    }
+
+    .target-chip .value {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #81c784;
+    }
+
+    /* ── Diet Table ───────────────────────────────── */
+    .table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    thead th {
+      background: #252525;
+      color: #aaa;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 2px solid #333;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid #242424;
+      transition: background 0.15s;
+    }
+
+    tbody tr:hover { background: #212121; }
+
+    tbody td {
+      padding: 10px 14px;
+      vertical-align: top;
+    }
+
+    /* meal group rows */
+    .meal-label td:first-child { font-size: 1.05rem; }
+    .meal-label td { font-weight: 600; color: #e0e0e0; }
+
+    /* item rows (food within a meal) */
+    .item-row td:first-child { color: transparent; }/* hide repeating meal emoji */
+    .item-row td { color: #bbb; }
+
+    /* subtotal rows */
+    .subtotal-row td {
+      background: #1e1e1e;
+      font-weight: 700;
+      color: #81c784;
+      font-size: 0.85rem;
+      padding: 8px 14px;
+      border-top: 1px dashed #333;
+      border-bottom: 2px solid #333;
+    }
+
+    /* separator rows */
+    .sep-row td {
+      padding: 4px 0;
+      background: transparent;
+      border: none;
+    }
+
+    /* ── Daily Total ──────────────────────────────── */
+    .totals-grid {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .total-chip {
+      flex: 1;
+      min-width: 180px;
+      background: #222;
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 18px 24px;
+      text-align: center;
+    }
+
+    .total-chip .macro { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 8px; }
+    .total-chip .amount { font-size: 1.3rem; font-weight: 800; color: #ff6b35; }
+
+    /* ── Workout section placeholder ─────────────── */
+    .workout-placeholder {
+      text-align: center;
+      padding: 60px 20px;
+      color: #555;
+      font-size: 1rem;
+      border: 2px dashed #2a2a2a;
+      border-radius: 12px;
+    }
+
+    .workout-placeholder span { font-size: 2.5rem; display: block; margin-bottom: 12px; }
+
+    @media (max-width: 480px) {
+      h1.page-title { font-size: 1.4rem; }
+      .section-header { font-size: 1.1rem; }
+      table { font-size: 0.8rem; }
+      thead th, tbody td, .subtotal-row td { padding: 8px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1 class="page-title">💪 Workout &amp; Diet Plan</h1>
+
+  <!-- ══════════════ WORKOUT SECTION ══════════════ -->
+  <div class="section-header workout">🏋️ Workout Plan</div>
+
+  <div class="card">
+    <div class="workout-placeholder">
+      <span>🏋️</span>
+      Workout plan coming soon…
+    </div>
+  </div>
+
+  <!-- ══════════════ DIET SECTION ══════════════ -->
+  <div class="section-header diet">🥗 Diet</div>
+
+  <!-- Sub-heading -->
+  <div class="card" style="margin-bottom: 12px; background: linear-gradient(135deg, #1b2b1b, #162616); border-color: #2a3f2a;">
+    <h2 style="color: #81c784; font-size: 1.3rem; margin-bottom: 4px;">💪 OPTIMAL CUTTING DIET</h2>
+  </div>
+
+  <!-- Targets -->
+  <div class="card">
+    <h2>🎯 Targets</h2>
+    <div class="targets-grid">
+      <div class="target-chip">
+        <div class="label">Calories</div>
+        <div class="value">~1900–2100 kcal</div>
+      </div>
+      <div class="target-chip">
+        <div class="label">Protein</div>
+        <div class="value">~135–150 g</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full Day Diet Table -->
+  <div class="card">
+    <h2>📊 Full Day Diet Table</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Meal</th>
+            <th>Food</th>
+            <th>Quantity</th>
+            <th>Protein</th>
+            <th>Calories</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- ── Breakfast ── -->
+          <tr class="meal-label">
+            <td>🌅 Breakfast</td>
+            <td>Whole eggs</td>
+            <td>4 eggs (~200g)</td>
+            <td>24g</td>
+            <td>280 kcal</td>
+          </tr>
+          <tr class="item-row">
+            <td></td>
+            <td>Egg whites</td>
+            <td>2 whites (~60g)</td>
+            <td>8g</td>
+            <td>35 kcal</td>
+          </tr>
+          <tr class="item-row">
+            <td></td>
+            <td>Bread</td>
+            <td>2 slices (~60g)</td>
+            <td>6g</td>
+            <td>160 kcal</td>
+          </tr>
+          <tr class="subtotal-row">
+            <td colspan="2">Subtotal</td>
+            <td></td>
+            <td>~38g</td>
+            <td>~475 kcal</td>
+          </tr>
+          <tr class="sep-row"><td colspan="5"></td></tr>
+
+          <!-- ── Lunch ── -->
+          <tr class="meal-label">
+            <td>🍛 Lunch</td>
+            <td>Soya chunks (dry)</td>
+            <td>75g</td>
+            <td>38–40g</td>
+            <td>260 kcal</td>
+          </tr>
+          <tr class="item-row">
+            <td></td>
+            <td>Rice (cooked)</td>
+            <td>200g</td>
+            <td>4–5g</td>
+            <td>260 kcal</td>
+          </tr>
+          <tr class="item-row">
+            <td></td>
+            <td>Vegetables</td>
+            <td>100g</td>
+            <td>~2g</td>
+            <td>~40 kcal</td>
+          </tr>
+          <tr class="subtotal-row">
+            <td colspan="2">Subtotal</td>
+            <td></td>
+            <td>~42–45g</td>
+            <td>~560 kcal</td>
+          </tr>
+          <tr class="sep-row"><td colspan="5"></td></tr>
+
+          <!-- ── Pre-workout ── -->
+          <tr class="meal-label">
+            <td>🥤 Pre-workout</td>
+            <td>Banana</td>
+            <td>120g</td>
+            <td>1g</td>
+            <td>100 kcal</td>
+          </tr>
+          <tr class="sep-row"><td colspan="5"></td></tr>
+
+          <!-- ── Dinner ── -->
+          <tr class="meal-label">
+            <td>🍗 Dinner</td>
+            <td>Chicken (raw)</td>
+            <td>200g</td>
+            <td>55–60g</td>
+            <td>300 kcal</td>
+          </tr>
+          <tr class="item-row">
+            <td></td>
+            <td>Rice OR chapathi</td>
+            <td>150g rice / 2 chapathi (~80g)</td>
+            <td>3–5g</td>
+            <td>180 kcal</td>
+          </tr>
+          <tr class="item-row">
+            <td></td>
+            <td>Vegetables</td>
+            <td>100g</td>
+            <td>~2g</td>
+            <td>~40 kcal</td>
+          </tr>
+          <tr class="subtotal-row">
+            <td colspan="2">Subtotal</td>
+            <td></td>
+            <td>~60–65g</td>
+            <td>~520 kcal</td>
+          </tr>
+          <tr class="sep-row"><td colspan="5"></td></tr>
+
+          <!-- ── Night ── -->
+          <tr class="meal-label">
+            <td>🥣 Night</td>
+            <td>Curd</td>
+            <td>250g</td>
+            <td>10–12g</td>
+            <td>120 kcal</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Daily Total -->
+  <div class="card">
+    <h2>🔢 Daily Total</h2>
+    <div class="totals-grid">
+      <div class="total-chip">
+        <div class="macro">Protein</div>
+        <div class="amount">~140–150 g</div>
+      </div>
+      <div class="total-chip">
+        <div class="macro">Calories</div>
+        <div class="amount">~1900–2100 kcal</div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
